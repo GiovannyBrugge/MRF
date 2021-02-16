@@ -10,9 +10,9 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
-#include <common/config.h>
-#include <common/camera.h>
-#include <common/renderer.h>
+#include <MRF/config.h>
+#include <MRF/camera.h>
+#include <MRF/renderer.h>
 
 Renderer::Renderer()
 {

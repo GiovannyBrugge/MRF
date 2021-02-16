@@ -2,8 +2,8 @@
 #define SCENE_H
 
 #include <vector>
-#include <common/camera.h>
-#include <common/sprite.h>
+#include <MRF/camera.h>
+#include <MRF/sprite.h>
 
 class Scene
 {

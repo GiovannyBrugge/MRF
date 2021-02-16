@@ -4,11 +4,11 @@
 // Include GLFW
 #include <GLFW/glfw3.h>
 
-#include <common/config.h>
-#include <common/renderer.h>
-#include <common/camera.h>
-#include <common/scene.h>
-#include <common/sprite.h>
+#include <MRF/config.h>
+#include <MRF/renderer.h>
+#include <MRF/camera.h>
+#include <MRF/scene.h>
+#include <MRF/sprite.h>
 
 int main( void )
 {

@@ -28,7 +28,7 @@ endif(UNIX)
 
 if(WIN32)
 	# Create a group for Visual Studio
-	SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
+	SOURCE_GROUP(MRF REGULAR_EXPRESSION ".*/MRF/.*" )
 	# suppress pedantic warnings
 	add_definitions( "/W1 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" )
 endif(WIN32)
@@ -61,24 +61,24 @@ set(ALL_GRAPHICS_LIBS
 	GLEW_190
 )
 
-# Common (libcommon.a)
-add_library(common # ar rcs libcommon.a
-	common/camera.h
-	common/camera.cpp
-	common/renderer.h
-	common/renderer.cpp
-	common/scene.h
-	common/scene.cpp
-	common/sprite.h
-	common/sprite.cpp
+# MRF (libMRF.a)
+add_library(MRF # ar rcs libMRF.a
+	MRF/camera.h
+	MRF/camera.cpp
+	MRF/renderer.h
+	MRF/renderer.cpp
+	MRF/scene.h
+	MRF/scene.cpp
+	MRF/sprite.h
+	MRF/sprite.cpp
 )
 
 # Demo
 add_executable(demo # g++ demo/demo.cpp -o demo
 	demo/demo.cpp
 )
-target_link_libraries(demo # g++ -lcommon
-	common
+target_link_libraries(demo # g++ -lMRF
+	MRF
 	${ALL_GRAPHICS_LIBS}
 )
 # Copy assets and shaders to the build directory
@@ -88,6 +88,6 @@ file(
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 file(
-	COPY common/shaders
+	COPY MRF/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
 )

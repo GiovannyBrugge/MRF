@@ -1,6 +1,6 @@
 #include <iostream>
-#include <common/scene.h>
-#include <common/config.h>
+#include <MRF/scene.h>
+#include <MRF/config.h>
 
 Scene::Scene()
 {

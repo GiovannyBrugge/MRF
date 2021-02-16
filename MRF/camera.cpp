@@ -1,5 +1,5 @@
-#include <common/config.h>
-#include <common/camera.h>
+#include <MRF/config.h>
+#include <MRF/camera.h>
 
 Camera::Camera()
 {

@@ -8,7 +8,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
-#include <common/sprite.h>
+#include <MRF/sprite.h>
 
 Sprite::Sprite(const std::string& imagepath)
 {
