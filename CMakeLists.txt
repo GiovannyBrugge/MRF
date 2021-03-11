@@ -63,6 +63,8 @@ set(ALL_GRAPHICS_LIBS
 
 # MRF (libMRF.a)
 add_library(MRF # ar rcs libMRF.a
+	MRF/audio.h
+	MRF/audio.cpp
 	MRF/camera.h
 	MRF/camera.cpp
 	MRF/renderer.h
