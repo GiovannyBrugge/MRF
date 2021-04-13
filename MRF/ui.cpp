@@ -8,9 +8,9 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
-#include <MRF/sprite.h>
+#include <MRF/ui.h>
 
-Sprite::Sprite(const std::string& imagepath)
+UI::UI(const std::string& imagepath)
 {
 	// Transform
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -58,7 +58,7 @@ Sprite::Sprite(const std::string& imagepath)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 }
 
-Sprite::~Sprite()
+UI::~UI()
 {
 	// cleanup
 	glDeleteBuffers(1, &_vertexbuffer);
@@ -66,7 +66,7 @@ Sprite::~Sprite()
 	glDeleteTextures(1, &_texture); // texture created in loadTGA() with glGenTextures()
 }
 
-GLuint Sprite::loadTGA(const std::string& imagepath)
+GLuint UI::loadTGA(const std::string& imagepath)
 {
 	std::cout << "Loading TGA: " << imagepath << std::endl;
 
@@ -107,7 +107,7 @@ GLuint Sprite::loadTGA(const std::string& imagepath)
 	}
 
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
-/*if ((_width & (_width - 1)) != 0) {
+	/*if ((_width & (_width - 1)) != 0) {
 		std::cout << "warning: " << imagepath << "’s width is not a power of 2" << std::endl;
 	}
 	if ((_height & (_height - 1)) != 0) {
@@ -115,8 +115,8 @@ GLuint Sprite::loadTGA(const std::string& imagepath)
 	}
 	if (_width != _height) {
 		std::cout << "warning: " << imagepath << " is not square" << std::endl;
-	}*/
-
+	}
+	*/
 	// Calculate pixelbuffer size in bytes
 	unsigned int imagesize = _width * _height * bitdepth;
 

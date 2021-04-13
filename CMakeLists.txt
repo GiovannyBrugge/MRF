@@ -73,6 +73,8 @@ add_library(MRF # ar rcs libMRF.a
 	MRF/scene.cpp
 	MRF/sprite.h
 	MRF/sprite.cpp
+	MRF/ui.h
+	MRF/ui.cpp
 )
 
 # Demo

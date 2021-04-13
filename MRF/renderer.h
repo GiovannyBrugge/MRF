@@ -7,7 +7,7 @@
 #include <MRF/scene.h>
 #include <MRF/camera.h>
 #include <MRF/sprite.h>
-
+#include <MRF/ui.h>
 class Renderer
 {
 public:
@@ -16,6 +16,7 @@ public:
 
 	void renderScene(Scene* scene);
 	void renderSprite(Sprite* sprite);
+	void renderUI(UI* ui);
 	GLFWwindow* window() { return _window; };
 
 	float updateDeltaTime();

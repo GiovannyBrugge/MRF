@@ -72,6 +72,7 @@ int Renderer::init()
 	// Create and compile our GLSL program from the shaders
 	_programID = this->loadShaders("shaders/sprite.vert", "shaders/sprite.frag");
 
+
 	// Use our shader
 	glUseProgram(_programID);
 
@@ -104,6 +105,11 @@ void Renderer::renderScene(Scene* scene)
 	for (Sprite* sprite : scene->sprites())
 	{
 		this->renderSprite(sprite);
+	}
+	
+	for (UI* ui : scene->uis())
+	{
+		this->renderUI(ui);
 	}
 
 	// Swap buffers
@@ -166,6 +172,66 @@ void Renderer::renderSprite(Sprite* sprite)
 
 	// Draw the triangles
 	glDrawArrays(GL_TRIANGLES, 0, 2*3); // 2*3 indices starting at 0 -> 2 triangles
+
+	// cleanup
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
+}
+void Renderer::renderUI(UI* ui)
+{
+	// get view + projectionmatrix from camera
+	glm::mat4 viewMatrix = _camera->getViewMatrix();
+	glm::mat4 projectionMatrix = _camera->getProjectionMatrix();
+
+	// Build the Model matrix from Sprite transform
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(ui->position.x, ui->position.y, 0.0f));
+	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, ui->rotation);
+	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(ui->scale.x, ui->scale.y, 1.0f));
+
+	glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+	// Build MVP matrix
+	glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
+
+	// Send our transformation to the currently bound shader, in the "MVP" uniform
+	GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+	// Bind our texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, ui->texture());
+	// Set our "textureSampler" sampler to use Texture Unit 0
+	GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+	glUniform1i(textureID, 0);
+
+	// 1st attribute buffer : vertices
+	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, ui->vertexbuffer());
+	glVertexAttribPointer(
+		vertexPositionID, // The attribute we want to configure
+		3,          // size : x,y,z => 3
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, ui->uvbuffer());
+	glVertexAttribPointer(
+		vertexUVID, // The attribute we want to configure
+		2,          // size : U,V => 2
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// Draw the triangles
+	glDrawArrays(GL_TRIANGLES, 0, 2 * 3); // 2*3 indices starting at 0 -> 2 triangles
 
 	// cleanup
 	glDisableVertexAttribArray(vertexPositionID);
